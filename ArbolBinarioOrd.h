@@ -1,6 +1,7 @@
 #ifndef ARBOLBINARIOORD_H 
 #define ARBOLBINARIOORD_H
 #include "NodoBin.h"
+#include <list>
 
 template <class T>
 
@@ -11,16 +12,15 @@ public:
     ArbolBinarioOrd();
     ~ArbolBinarioOrd();
     bool esVacio();
-    NodoBin<T> * getRaiz();
-    void setRaiz(NodoBin<T> *val);
     int altura();
     int tamahno();
-    bool insertar(NodoBin<T> *nuevo);
+    bool insertar(T& val);
     bool eliminar(T& val);
     void preOrden();
     void inOrden();
     void posOrden();
     void nivelOrden();
+    NodoBin<T>* insertRec(NodoBin<T>* nodo, T valor);
 };
 
 #include "ArbolBinarioOrd.hxx"

@@ -18,55 +18,33 @@ bool ArbolBinarioOrd<T>::esVacio(){
     return this->raiz==NULL;
 }
 
+
 template <class T>
-NodoBin<T> * ArbolBinarioOrd<T>::getRaiz(){
-    return this->raiz;
+bool ArbolBinarioOrd<T>::insertar(T& val){
+    raiz= insertRec(raiz, val);
 }
 
 template <class T>
-bool ArbolBinarioOrd<T>::insertar(NodoBin<T> *nuevo){
-NodoBin <T> *padre = this->raiz;
-
-//cambia su estado cuadno se agrega un nodo
-bool agregado= false;
-
-if(this->raiz == NULL){
-    this->raiz=nuevo;
-}else{
-    do{
-        std::cout<<"\nNodo : "<<nuevo->obtenerDato()<<std::endl;
-        std::cout<<"Padre : "<<padre->obtenerDato()<<std::endl;
-      //  if(padre->obtenerHijoIzq()!=NULL)
-     //       std::cout<<"Hijo izquierdo : "<<padre->obtenerHijoIzq()->obtenerDato()<<std::endl;
-     //   if(padre->obtenerHijoDer()!=NULL)
-      //      std::cout<<"Hijo Derecho: "<<padre->obtenerHijoDer()->obtenerDato()<<std::endl;
-
-        if(nuevo->obtenerDato() < padre->obtenerDato()){
-          //  std::cout<<"Izquierda\n";
-            if(padre->obtenerHijoIzq()==NULL){
-                std::cout<<"Agregado: "<<nuevo->obtenerDato()<<" izquierda de "<< padre->obtenerDato()<<std::endl;
-                padre->fijarHijoIzq(nuevo);
-                agregado = true;
-
-            }else
-                std::cout<<"cambio de padre";
-                padre = padre->obtenerHijoIzq();
-                
-        }else{
-          //  std::cout<<"Derecha\n";
-            if(padre->obtenerHijoDer()==NULL){
-                padre->fijarHijoDer(nuevo);
-                agregado = true;
-                std::cout<<"Agregado: "<<nuevo->obtenerDato()<<" Derecha de "<< padre->obtenerDato()<<std::endl;
-
-            }else
-                //std::cout<<"cambio de padre";
-                padre=padre->obtenerHijoDer();
-        }
-
-
-    }while(!agregado);
+NodoBin<T>* ArbolBinarioOrd<T>::insertRec(NodoBin<T>* nodo, T valor){
+    if (nodo == nullptr) {
+        return new NodoBin<T>(valor);
     }
+
+    if (valor < nodo->obtenerDato()) {
+        if(nodo->obtenerHijoIzq()==nullptr)
+            std::cout<<"Padre: "<<nodo->obtenerDato()<<" agregado izquierdo: "<<valor<<"\n";
+
+        nodo->fijarHijoIzq(insertRec(nodo->obtenerHijoIzq(), valor));
+    } else if (valor > nodo->obtenerDato()) {
+        if(nodo->obtenerHijoDer()==nullptr)
+            std::cout<<"Padre: "<<nodo->obtenerDato()<<" agregado derecho: "<<valor<<"\n";
+
+
+        nodo->fijarHijoDer(insertRec(nodo->obtenerHijoDer(), valor));
+        
+    }
+
+    return nodo;
 }
 
 template <class T>
@@ -78,15 +56,6 @@ template <class T>
 int ArbolBinarioOrd<T>::tamahno(){
 
 }
-
-template <class T>
-void ArbolBinarioOrd<T>::setRaiz(NodoBin<T> *val){
-    if(this->raiz == NULL){
-        
-        this->raiz=val;
-    }
-}
-
 
 
 template <class T>
